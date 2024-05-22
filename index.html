@@ -1,36 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Caller</title>
 </head>
-
 <body>
     <h1>API Caller</h1>
-    <button onclick="processNumber()">Process</button>
-    <p id="result"></p>
+    <button onclick="sendRequest()">Send Request</button>
 
     <script>
-        function processNumber() {
-            var number = 1; // تنظیم عدد به ۱
-
+        // تابع برای ارسال درخواست به API
+        function sendRequest() {
+            // آدرس API را مشخص کنید
+            var apiUrl = 'https://aergergajhy.github.io/process_number';
+            
+            // ایجاد یک شیء XMLHttpRequest
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "https://aergergajhy.github.io/asgvsd/process_number", true);
-            xhr.setRequestHeader("Content-Type", "application/json");
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var response = JSON.parse(xhr.responseText);
-                    document.getElementById("result").innerText = 'Processed number: ' + response.result;
+            
+            // تنظیم متد و آدرس درخواست
+            xhr.open('POST', apiUrl, true);
+            
+            // تنظیم هدر Content-Type برای ارسال داده‌های JSON
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            
+            // تابعی که هنگام تغییر وضعیت درخواست فراخوانی می‌شود
+            xhr.onreadystatechange = function() {
+                // اگر وضعیت درخواست "DONE" است و وضعیت HTTP موفقیت آمیز بوده است
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    // نمایش پاسخ API
+                    console.log(xhr.responseText);
                 }
             };
-
-            var data = JSON.stringify({ number: parseInt(number) });
-            xhr.send(data);
+            
+            // ارسال درخواست با داده JSON (در اینجا عدد ۱)
+            xhr.send(JSON.stringify({ number: 1 }));
         }
     </script>
 </body>
-
 </html>
